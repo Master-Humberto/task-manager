@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Tarefas</title>
+</head>
+<body>
+    <h1>Gerenciador de Tarefas</h1>
+    
+    <h2>Lista de Tarefas</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Descrição</th>
+                <th>Status</th>
+                <th>Criado em</th>
+                <th>Atualizado em</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (tasks && tasks.length > 0) { %>
+                <% tasks.forEach(task => { %>
+                    <tr>
+                        <td><%= task.id %></td>
+                        <td><%= task.title %></td>
+                        <td><%= task.description || 'Sem descrição' %></td>
+                        <td><%= task.status %></td>
+                        <td><%= new Date(task.created_at).toLocaleString() %></td>
+                        <td><%= new Date(task.updated_at).toLocaleString() %></td>
+                        <td>
+                            <a href="#edit-<%= task.id %>">Editar</a> | 
+                            <a href="#delete-<%= task.id %>" onclick="return confirm('Tem certeza que deseja excluir esta tarefa?')">Excluir</a>
+                        </td>
+                    </tr>
+                <% }); %>
+            <% } else { %>
+                <tr>
+                    <td colspan="7">Nenhuma tarefa encontrada</td>
+                </tr>
+            <% } %>
+            <!-- Exemplos de tarefas para demonstração -->
+            <% if (!tasks || tasks.length === 0) { %>
+                <tr>
+                    <td>1</td>
+                    <td>Implementar API REST</td>
+                    <td>Criar endpoints para CRUD de tarefas</td>
+                    <td>concluída</td>
+                    <td><%= new Date().toLocaleString() %></td>
+                    <td><%= new Date().toLocaleString() %></td>
+                    <td>
+                        <a href="#edit-1">Editar</a> | 
+                        <a href="#delete-1">Excluir</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Testar conexão com banco</td>
+                    <td>Verificar se a conexão com PostgreSQL está funcionando</td>
+                    <td>em andamento</td>
+                    <td><%= new Date().toLocaleString() %></td>
+                    <td><%= new Date().toLocaleString() %></td>
+                    <td>
+                        <a href="#edit-2">Editar</a> | 
+                        <a href="#delete-2">Excluir</a>
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <h2>Adicionar Nova Tarefa</h2>
+    <form action="/api/tasks" method="POST" id="createForm">
+        <div>
+            <label for="title">Título:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="description">Descrição:</label>
+            <textarea id="description" name="description" rows="3"></textarea>
+        </div>
+        <div>
+            <label for="status">Status:</label>
+            <select id="status" name="status">
+                <option value="pendente">Pendente</option>
+                <option value="em andamento">Em andamento</option>
+                <option value="concluída">Concluída</option>
+            </select>
+        </div>
+        <div>
+            <button type="submit">Salvar Tarefa</button>
+        </div>
+    </form>
+
+    <form action="/api/tasks" method="PUT" id="editForm" style="display:none;">
+        <input type="hidden" id="editId" name="id">
+        <div>
+            <label for="editTitle">Título:</label>
+            <input type="text" id="editTitle" name="title" required>
+        </div>
+        <div>
+            <label for="editDescription">Descrição:</label>
+            <textarea id="editDescription" name="description" rows="3"></textarea>
+        </div>
+        <div>
+            <label for="editStatus">Status:</label>
+            <select id="editStatus" name="status">
+                <option value="pendente">Pendente</option>
+                <option value="em andamento">Em andamento</option>
+                <option value="concluída">Concluída</option>
+            </select>
+        </div>
+        <div>
+            <button type="submit">Atualizar Tarefa</button>
+            <button type="button" onclick="hideEditForm()">Cancelar</button>
+        </div>
+    </form>
+
+    <script>
+        // Script básico para demonstrar interação com a API
+        document.getElementById('createForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = {
+                title: document.getElementById('title').value,
+                description: document.getElementById('description').value,
+                status: document.getElementById('status').value
+            };
+            
+            fetch('/api/tasks', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Tarefa criada com sucesso!');
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao criar tarefa');
+            });
+        });
+
+        // Função para mostrar formulário de edição
+        function showEditForm(id, title, description, status) {
+            document.getElementById('editId').value = id;
+            document.getElementById('editTitle').value = title;
+            document.getElementById('editDescription').value = description;
+            document.getElementById('editStatus').value = status;
+            document.getElementById('editForm').style.display = 'block';
+        }
+
+        // Função para esconder formulário de edição
+        function hideEditForm() {
+            document.getElementById('editForm').style.display = 'none';
+        }
+
+        // Adicionar event listeners para links de edição
+        document.addEventListener('DOMContentLoaded', function() {
+            const editLinks = document.querySelectorAll('a[href^="#edit-"]');
+            editLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const id = this.href.split('-')[1];
+                    const row = this.closest('tr');
+                    const title = row.cells[1].textContent;
+                    const description = row.cells[2].textContent === 'Sem descrição' ? '' : row.cells[2].textContent;
+                    const status = row.cells[3].textContent;
+                    showEditForm(id, title, description, status);
+                });
+            });
+
+            // Configurar formulário de edição
+            document.getElementById('editForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const id = document.getElementById('editId').value;
+                const formData = {
+                    title: document.getElementById('editTitle').value,
+                    description: document.getElementById('editDescription').value,
+                    status: document.getElementById('editStatus').value
+                };
+                
+                fetch(`/api/tasks/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Tarefa atualizada com sucesso!');
+                    window.location.reload();
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert('Erro ao atualizar tarefa');
+                });
+            });
+
+            // Configurar links de exclusão
+            const deleteLinks = document.querySelectorAll('a[href^="#delete-"]');
+            deleteLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (confirm('Tem certeza que deseja excluir esta tarefa?')) {
+                        const id = this.href.split('-')[1];
+                        
+                        fetch(`/api/tasks/${id}`, {
+                            method: 'DELETE'
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert('Tarefa excluída com sucesso!');
+                            window.location.reload();
+                        })
+                        .catch(error => {
+                            console.error('Erro:', error);
+                            alert('Erro ao excluir tarefa');
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

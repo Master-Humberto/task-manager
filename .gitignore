@@ -1,0 +1,82 @@
+# Node.js .gitignore
+
+# Dependências
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Diretórios de ambiente de execução
+.npm/
+.yarn/
+.pnp/
+.pnp.js
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Arquivos de build/output
+dist/
+build/
+out/
+coverage/
+.coverage/
+.nyc_output/
+.next/
+.nuxt/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Diretórios do sistema operacional
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Arquivos temporários
+*.swp
+*.swo
+.tmp/
+.temp/
+*.tmp
+*.bak
+*.tgz
+
+# IDEs e editores
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.c9/
+*.launch
+*.code-workspace
+.settings/
+
+# TypeScript
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# Debug
+.node_repl_history
+
+# Diretórios específicos
+.cache/
+public/
+
+# Serverless
+.serverless/
+
+# DynamoDB Local
+.dynamodb/

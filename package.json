@@ -1,0 +1,24 @@
+{
+  "name": "simple-task-api",
+  "version": "1.0.0",
+  "description": "API simples de gerenciamento de tarefas com Express e PostgreSQL",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "init-db": "psql -U postgres -d task_manager -f init.sql"
+  },
+  "keywords": [
+    "express",
+    "postgresql",
+    "api",
+    "task-manager"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "ejs": "^3.1.10",
+    "express": "^4.18.2",
+    "pg": "^8.11.3"
+  }
+}
