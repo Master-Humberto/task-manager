@@ -4,123 +4,397 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciador de Tarefas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1, h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eaeaea;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+        
+        thead th {
+            background-color: #f1f5f9;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        tbody td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #edf2f7;
+        }
+        
+        tbody tr:hover {
+            background-color: #f8fafc;
+        }
+        
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .no-tasks {
+            text-align: center;
+            padding: 20px;
+            color: #718096;
+        }
+        
+        .form-container {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+        }
+        
+        .form-row {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2d3748;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 16px;
+            background-color: #fff;
+            transition: border-color 0.2s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-primary {
+            background-color: #4299e1;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #3182ce;
+        }
+        
+        .btn-secondary {
+            background-color: #a0aec0;
+            color: white;
+            margin-left: 10px;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #718096;
+        }
+        
+        .btn-danger {
+            background-color: #e53e3e;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c53030;
+        }
+        
+
+        .actions a {
+            color: #4299e1;
+            text-decoration: none;
+            margin-right: 12px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .actions a:hover {
+            color: #3182ce;
+            text-decoration: underline;
+        }
+        
+        .actions a.delete {
+            color: #e53e3e;
+        }
+        
+        .actions a.delete:hover {
+            color: #c53030;
+        }
+        
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .status-pendente {
+            background-color: #fed7d7;
+            color: #c53030;
+        }
+        
+        .status-em-andamento {
+            background-color: #feebc8;
+            color: #b7791f;
+        }
+        
+        .status-concluída {
+            background-color: #c6f6d5;
+            color: #276749;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .table-container {
+                border-radius: 6px;
+            }
+            
+            thead th, tbody td {
+                padding: 10px 12px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .form-container {
+                padding: 15px;
+            }
+            
+            button {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .btn-secondary {
+                margin-left: 0;
+            }
+            
+            .actions a {
+                display: block;
+                margin-bottom: 8px;
+            }
+        }
+        
+        .form-section {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid #eaeaea;
+        }
+        
+        .form-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+    </style>
 </head>
 <body>
     <h1>Gerenciador de Tarefas</h1>
     
-    <h2>Lista de Tarefas</h2>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Título</th>
-                <th>Descrição</th>
-                <th>Status</th>
-                <th>Criado em</th>
-                <th>Atualizado em</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <% if (tasks && tasks.length > 0) { %>
-                <% tasks.forEach(task => { %>
+    <div class="table-container">
+        <h2>Lista de Tarefas</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Descrição</th>
+                    <th>Status</th>
+                    <th>Criado em</th>
+                    <th>Atualizado em</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (tasks && tasks.length > 0) { %>
+                    <% tasks.forEach(task => { %>
+                        <tr>
+                            <td><%= task.id %></td>
+                            <td><%= task.title %></td>
+                            <td><%= task.description || 'Sem descrição' %></td>
+                            <td><span class="status status-<%= task.status.replace(' ', '-') %>"><%= task.status %></span></td>
+                            <td><%= new Date(task.created_at).toLocaleString() %></td>
+                            <td><%= new Date(task.updated_at).toLocaleString() %></td>
+                            <td class="actions">
+                                <a href="#edit-<%= task.id %>" class="edit">Editar</a>
+                                <a href="#delete-<%= task.id %>" class="delete">Excluir</a>
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
                     <tr>
-                        <td><%= task.id %></td>
-                        <td><%= task.title %></td>
-                        <td><%= task.description || 'Sem descrição' %></td>
-                        <td><%= task.status %></td>
-                        <td><%= new Date(task.created_at).toLocaleString() %></td>
-                        <td><%= new Date(task.updated_at).toLocaleString() %></td>
-                        <td>
-                            <a href="#edit-<%= task.id %>">Editar</a> | 
-                            <a href="#delete-<%= task.id %>" onclick="return confirm('Tem certeza que deseja excluir esta tarefa?')">Excluir</a>
+                        <td colspan="7" class="no-tasks">Nenhuma tarefa encontrada</td>
+                    </tr>
+                <% } %>
+                <% if (!tasks || tasks.length === 0) { %>
+                    <tr>
+                        <td>1</td>
+                        <td>Implementar API REST</td>
+                        <td>Criar endpoints para CRUD de tarefas</td>
+                        <td><span class="status status-concluída">concluída</span></td>
+                        <td><%= new Date().toLocaleString() %></td>
+                        <td><%= new Date().toLocaleString() %></td>
+                        <td class="actions">
+                            <a href="#edit-1" class="edit">Editar</a>
+                            <a href="#delete-1" class="delete">Excluir</a>
                         </td>
                     </tr>
-                <% }); %>
-            <% } else { %>
-                <tr>
-                    <td colspan="7">Nenhuma tarefa encontrada</td>
-                </tr>
-            <% } %>
-            <!-- Exemplos de tarefas para demonstração -->
-            <% if (!tasks || tasks.length === 0) { %>
-                <tr>
-                    <td>1</td>
-                    <td>Implementar API REST</td>
-                    <td>Criar endpoints para CRUD de tarefas</td>
-                    <td>concluída</td>
-                    <td><%= new Date().toLocaleString() %></td>
-                    <td><%= new Date().toLocaleString() %></td>
-                    <td>
-                        <a href="#edit-1">Editar</a> | 
-                        <a href="#delete-1">Excluir</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Testar conexão com banco</td>
-                    <td>Verificar se a conexão com PostgreSQL está funcionando</td>
-                    <td>em andamento</td>
-                    <td><%= new Date().toLocaleString() %></td>
-                    <td><%= new Date().toLocaleString() %></td>
-                    <td>
-                        <a href="#edit-2">Editar</a> | 
-                        <a href="#delete-2">Excluir</a>
-                    </td>
-                </tr>
-            <% } %>
-        </tbody>
-    </table>
+                    <tr>
+                        <td>2</td>
+                        <td>Testar conexão com banco</td>
+                        <td>Verificar se a conexão com PostgreSQL está funcionando</td>
+                        <td><span class="status status-em-andamento">em andamento</span></td>
+                        <td><%= new Date().toLocaleString() %></td>
+                        <td><%= new Date().toLocaleString() %></td>
+                        <td class="actions">
+                            <a href="#edit-2" class="edit">Editar</a>
+                            <a href="#delete-2" class="delete">Excluir</a>
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
 
-    <h2>Adicionar Nova Tarefa</h2>
-    <form action="/api/tasks" method="POST" id="createForm">
-        <div>
-            <label for="title">Título:</label>
-            <input type="text" id="title" name="title" required>
+    <div class="form-section">
+        <div class="form-container" id="createFormContainer">
+            <h2>Adicionar Nova Tarefa</h2>
+            <form action="/api/tasks" method="POST" id="createForm">
+                <div class="form-row">
+                    <label for="title">Título:</label>
+                    <input type="text" id="title" name="title" required placeholder="Digite o título da tarefa">
+                </div>
+                <div class="form-row">
+                    <label for="description">Descrição:</label>
+                    <textarea id="description" name="description" rows="3" placeholder="Descreva a tarefa (opcional)"></textarea>
+                </div>
+                <div class="form-row">
+                    <label for="status">Status:</label>
+                    <select id="status" name="status">
+                        <option value="pendente">Pendente</option>
+                        <option value="em andamento">Em andamento</option>
+                        <option value="concluída">Concluída</option>
+                    </select>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn-primary">Salvar Tarefa</button>
+                </div>
+            </form>
         </div>
-        <div>
-            <label for="description">Descrição:</label>
-            <textarea id="description" name="description" rows="3"></textarea>
-        </div>
-        <div>
-            <label for="status">Status:</label>
-            <select id="status" name="status">
-                <option value="pendente">Pendente</option>
-                <option value="em andamento">Em andamento</option>
-                <option value="concluída">Concluída</option>
-            </select>
-        </div>
-        <div>
-            <button type="submit">Salvar Tarefa</button>
-        </div>
-    </form>
 
-    <form action="/api/tasks" method="PUT" id="editForm" style="display:none;">
-        <input type="hidden" id="editId" name="id">
-        <div>
-            <label for="editTitle">Título:</label>
-            <input type="text" id="editTitle" name="title" required>
+        <div class="form-container" id="editFormContainer" style="display:none;">
+            <h2>Editar Tarefa</h2>
+            <form action="/api/tasks" method="PUT" id="editForm">
+                <input type="hidden" id="editId" name="id">
+                <div class="form-row">
+                    <label for="editTitle">Título:</label>
+                    <input type="text" id="editTitle" name="title" required>
+                </div>
+                <div class="form-row">
+                    <label for="editDescription">Descrição:</label>
+                    <textarea id="editDescription" name="description" rows="3"></textarea>
+                </div>
+                <div class="form-row">
+                    <label for="editStatus">Status:</label>
+                    <select id="editStatus" name="status">
+                        <option value="pendente">Pendente</option>
+                        <option value="em andamento">Em andamento</option>
+                        <option value="concluída">Concluída</option>
+                    </select>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn-primary">Atualizar Tarefa</button>
+                    <button type="button" class="btn-secondary" onclick="hideEditForm()">Cancelar</button>
+                </div>
+            </form>
         </div>
-        <div>
-            <label for="editDescription">Descrição:</label>
-            <textarea id="editDescription" name="description" rows="3"></textarea>
-        </div>
-        <div>
-            <label for="editStatus">Status:</label>
-            <select id="editStatus" name="status">
-                <option value="pendente">Pendente</option>
-                <option value="em andamento">Em andamento</option>
-                <option value="concluída">Concluída</option>
-            </select>
-        </div>
-        <div>
-            <button type="submit">Atualizar Tarefa</button>
-            <button type="button" onclick="hideEditForm()">Cancelar</button>
-        </div>
-    </form>
+    </div>
 
     <script>
-        // Script básico para demonstrar interação com a API
+        // Script para interação com a API usando Fetch
         document.getElementById('createForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const formData = {
@@ -147,23 +421,27 @@
             });
         });
 
-        // Função para mostrar formulário de edição
         function showEditForm(id, title, description, status) {
             document.getElementById('editId').value = id;
             document.getElementById('editTitle').value = title;
             document.getElementById('editDescription').value = description;
             document.getElementById('editStatus').value = status;
-            document.getElementById('editForm').style.display = 'block';
+            
+            document.getElementById('editFormContainer').style.display = 'block';
+            document.getElementById('createFormContainer').style.display = 'none';
+            document.getElementById('editFormContainer').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Função para esconder formulário de edição
         function hideEditForm() {
-            document.getElementById('editForm').style.display = 'none';
+            document.getElementById('editFormContainer').style.display = 'none';
+            document.getElementById('createFormContainer').style.display = 'block';
+            document.getElementById('createFormContainer').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Adicionar event listeners para links de edição
+        // Adicionar event listeners para links de edição e exclusão
         document.addEventListener('DOMContentLoaded', function() {
-            const editLinks = document.querySelectorAll('a[href^="#edit-"]');
+            // Editar tarefa
+            const editLinks = document.querySelectorAll('a.edit');
             editLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -171,12 +449,12 @@
                     const row = this.closest('tr');
                     const title = row.cells[1].textContent;
                     const description = row.cells[2].textContent === 'Sem descrição' ? '' : row.cells[2].textContent;
-                    const status = row.cells[3].textContent;
+                    const status = row.querySelector('.status').textContent;
                     showEditForm(id, title, description, status);
                 });
             });
 
-            // Configurar formulário de edição
+            // Atualizar tarefa
             document.getElementById('editForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 const id = document.getElementById('editId').value;
@@ -204,8 +482,8 @@
                 });
             });
 
-            // Configurar links de exclusão
-            const deleteLinks = document.querySelectorAll('a[href^="#delete-"]');
+            // Excluir tarefa
+            const deleteLinks = document.querySelectorAll('a.delete');
             deleteLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();

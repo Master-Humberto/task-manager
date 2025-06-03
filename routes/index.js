@@ -1,11 +1,10 @@
-// routes/index.js
 const express = require('express');
 const router = express.Router();
 const TaskController = require('../controllers/TaskController');
-const Task = require('../models/Task')
+const Task = require('../models/Task'); 
 
-// Rota para verificar status da API
-router.get('/', (req, res) => {
+
+router.get('/api', (req, res) => { 
   res.status(200).json({
     success: true,
     message: 'API de Gerenciamento de Tarefas funcionando corretamente',
@@ -14,28 +13,25 @@ router.get('/', (req, res) => {
       'GET /api/tasks/:id': 'Buscar uma tarefa específica',
       'POST /api/tasks': 'Criar uma nova tarefa',
       'PUT /api/tasks/:id': 'Atualizar uma tarefa existente',
-      'DELETE /api/tasks/:id': 'Excluir uma tarefa'
+      'DELETE /api/tasks/:id': 'Excluir uma tarefa',
+      'GET /view/tasks': 'Visualizar tarefas em HTML (EJS)'
     }
   });
 });
-// Rota para visualização das tarefas (adicione junto com as outras rotas)
+
+
 router.get('/view/tasks', async (req, res) => {
   try {
-    // Buscar tarefas usando o modelo Task
     const tasks = await Task.findAll();
-    console.log('Tarefas encontradas:', tasks ? tasks.length : 0);
-    
-    // Renderizar view com as tarefas
+
     res.render('tasks', { tasks: tasks || [] });
   } catch (error) {
-    console.error('Erro ao carregar tarefas:', error);
-    // Renderizar view mesmo com erro, mas sem tarefas (mostrará os exemplos)
-    res.render('tasks', { tasks: [] });
+    console.error('Erro ao carregar tarefas para view:', error);
+    res.status(500).render('tasks', { tasks: [], error: 'Erro ao carregar tarefas.' });
   }
 });
 
-
-// Rotas para tarefas
+// Rotas da API para tarefas
 router.get('/api/tasks', TaskController.listTasks);
 router.get('/api/tasks/:id', TaskController.getTask);
 router.post('/api/tasks', TaskController.createTask);

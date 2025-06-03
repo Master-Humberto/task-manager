@@ -1,9 +1,7 @@
-// config/database.js
 require('dotenv').config();
 
 const { Pool } = require('pg');
 
-// Criando a pool de conexões
 const pool = new Pool({
   user: process.env.DB_USER || 'postgres',
   host: process.env.DB_HOST || 'localhost',

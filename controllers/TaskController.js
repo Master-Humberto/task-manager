@@ -1,7 +1,5 @@
-
 const Task = require('../models/Task');
 
-// cria a o controller do sistema de tarefas 
 class TaskController {
   // lista as tarefas
   static async listTasks(req, res) {
@@ -55,7 +53,6 @@ class TaskController {
     try {
       const { title, description, status } = req.body;
       
-      // Validação básica
       if (!title) {
         return res.status(400).json({
           success: false,
@@ -63,11 +60,10 @@ class TaskController {
         });
       }
       
-      // Criar a tarefa
       const task = await Task.create({
         title,
         description,
-        status: status || 'pendente'
+        status: status || 'pendente' 
       });
       
       res.status(201).json({
@@ -91,25 +87,24 @@ class TaskController {
       const taskId = req.params.id;
       const { title, description, status } = req.body;
       
-      // Validação básica
-      if (!title) {
+      const taskToUpdate = {};
+      if (title !== undefined) taskToUpdate.title = title;
+      if (description !== undefined) taskToUpdate.description = description;
+      if (status !== undefined) taskToUpdate.status = status;
+
+      if (Object.keys(taskToUpdate).length === 0) {
         return res.status(400).json({
-          success: false,
-          message: 'O título da tarefa é obrigatório'
+            success: false,
+            message: 'Nenhum dado fornecido para atualização'
         });
       }
-      
-      // Atualizar a tarefa
-      const updatedTask = await Task.update(taskId, {
-        title,
-        description,
-        status
-      });
+
+      const updatedTask = await Task.update(taskId, taskToUpdate);
       
       if (!updatedTask) {
         return res.status(404).json({
           success: false,
-          message: 'Tarefa não encontrada'
+          message: 'Tarefa não encontrada para atualização'
         });
       }
       
@@ -137,14 +132,15 @@ class TaskController {
       if (!deleted) {
         return res.status(404).json({
           success: false,
-          message: 'Tarefa não encontrada'
+          message: 'Tarefa não encontrada para exclusão'
         });
       }
       
       res.status(200).json({
         success: true,
         message: 'Tarefa excluída com sucesso',
-        data: { id: taskId }
+
+        data: { id: taskId, deleted: true } 
       });
     } catch (error) {
       console.error(`Erro ao excluir tarefa:`, error);
