@@ -11,6 +11,10 @@ Principais funcionalidades:
 - Respostas JSON para visualização clara das operações
 - Conexão com banco de dados PostgreSQL
 
+## Tela inicial
+<center>
+<img src="assets/tela.png">
+</center>
 ## Estrutura de Pastas e Arquivos
 
 O projeto segue uma estrutura organizada baseada no padrão MVC, separando claramente as responsabilidades:

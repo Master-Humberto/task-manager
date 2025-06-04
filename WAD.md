@@ -21,7 +21,7 @@ Esta separação de responsabilidades facilita a manutenção, escalabilidade e 
 O banco de dados foi projetado de forma simples, contendo apenas a tabela de tarefas:
 
 <center>
-<img src = "diagrama.png">
+<img src = "assets/diagrama.png">
 </center>
 
 ### Descrição da Tabela
