@@ -11,7 +11,7 @@ Content-Type: application/json
     "status": "concluída"
 }
 ### 
-PUT http://localhost:3000/api/tasks/14
+PUT http://localhost:3000/api/tasks/4
 Content-Type: application/json
 
 {
@@ -20,4 +20,4 @@ Content-Type: application/json
     "status": "em andamento"
 }
 ### 
-DELETE http://localhost:3000/api/tasks/14
+DELETE http://localhost:3000/api/tasks/4
