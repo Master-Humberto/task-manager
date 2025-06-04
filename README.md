@@ -158,5 +158,10 @@ curl -X DELETE http://localhost:3000/api/tasks/1
 
 [Assista ao vídeo mostrando tudo do Task Manager](https://youtu.be/JM0T-YaOA6g)
 
+### Versionamento
+- Parte 1 das ponderadas de programação : v1.0
+- Parte 2 das ponderadas de programação : v1.1
+- Parte 3 das ponderadas de programação : v1.2
+
 ## Referências 
 - Visual Studio Code : https://code.visualstudio.com/
