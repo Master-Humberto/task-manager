@@ -1,6 +1,6 @@
 GET http://localhost:3000/api/tasks
 ### 
-GET http://localhost:3000/api/tasks/6
+GET http://localhost:3000/api/tasks/4
 ### 
 POST http://localhost:3000/api/tasks
 Content-Type: application/json
@@ -11,7 +11,7 @@ Content-Type: application/json
     "status": "concluída"
 }
 ### 
-PUT http://localhost:3000/api/tasks/12
+PUT http://localhost:3000/api/tasks/14
 Content-Type: application/json
 
 {
@@ -20,4 +20,4 @@ Content-Type: application/json
     "status": "em andamento"
 }
 ### 
-DELETE http://localhost:3000/api/tasks/12
+DELETE http://localhost:3000/api/tasks/14
