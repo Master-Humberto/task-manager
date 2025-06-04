@@ -1,0 +1,23 @@
+GET http://localhost:3000/api/tasks
+### 
+GET http://localhost:3000/api/tasks/6
+### 
+POST http://localhost:3000/api/tasks
+Content-Type: application/json
+
+{
+    "title": "abobora",
+    "description": "cheio de sementes",
+    "status": "concluída"
+}
+### 
+PUT http://localhost:3000/api/tasks/12
+Content-Type: application/json
+
+{
+    "title": "amendoim",
+    "description": "nozes",
+    "status": "em andamento"
+}
+### 
+DELETE http://localhost:3000/api/tasks/12

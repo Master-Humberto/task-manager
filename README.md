@@ -134,6 +134,10 @@ curl -X GET http://localhost:3000/api/tasks
 curl -X GET http://localhost:3000/api/tasks/1
 ```
 
+## Adiciona uma tarefa nova
+```bash
+curl -X POST http://localhost:3000/api/tasks
+
 ### Atualizar uma tarefa
 ```bash
 curl -X PUT http://localhost:3000/api/tasks/1 \
