@@ -1,10 +1,10 @@
-# API de Gerenciamento de Tarefas
+# Task Manager
 
-Este projeto implementa uma API simples de gerenciamento de tarefas utilizando Node.js, Express e PostgreSQL, seguindo o padrão de arquitetura MVC (Model-View-Controller). A API permite criar, visualizar, editar e excluir tarefas através de endpoints REST.
+Este projeto implementa uma API simples de gerenciamento de tarefas utilizando Node.js, Express e PostgreSQL, seguindo o padrão de arquitetura MVC (Model-View-Controller). A API permite criar, visualizar, editar e excluir tarefas através de endpoints REST via fetch API e, além disso, há uma interface para interação do usuário com a aplicação.
 
 ## Descrição do Sistema
 
-A API de Gerenciamento de Tarefas é uma aplicação backend que facilita a organização e acompanhamento de atividades. O sistema foi desenvolvido com foco na simplicidade e eficiência, permitindo operações CRUD (Create, Read, Update, Delete) para tarefas.
+O Task Manager é uma aplicação backend que facilita a organização e acompanhamento de atividades. O sistema foi desenvolvido com foco na simplicidade e eficiência, permitindo operações CRUD (Create, Read, Update, Delete) para tarefas.
 
 Principais funcionalidades:
 - Criação, visualização, edição e exclusão de tarefas (CRUD completo)
@@ -16,7 +16,7 @@ Principais funcionalidades:
 O projeto segue uma estrutura organizada baseada no padrão MVC, separando claramente as responsabilidades:
 
 ```
-simple-task-api/
+task-manager/
 │
 ├── config/                # Arquivos de configuração
 │   └── database.js        # Configuração de conexão com o banco de dados
@@ -70,7 +70,7 @@ A API disponibiliza os seguintes endpoints:
 
 1. **Clone o repositório**
    ```bash
-   git clone https://github.com/Master-Humberto/task-manager.git
+   git clone https://github.com/humberto-filho/task-manager.git
    cd task-manager
    ```
 
@@ -84,6 +84,7 @@ A API disponibiliza os seguintes endpoints:
    cp .env.example .env
    ```
    Edite o arquivo `.env` com suas configurações locais.
+   Ou, de forma alternativa, crie um arquivo .env no seu editor de código (foi usado o Visual Studio Code nessa aplicação) e colocar suas variáveis de ambiente.
 
 4. **Inicialize o banco de dados**
    - Crie um banco de dados PostgreSQL chamado `task_manager`
@@ -100,6 +101,7 @@ A API disponibiliza os seguintes endpoints:
    ```bash
    npm start
    ```
+
 
 6. **Teste a API**
    Acesse `http://localhost:3000` para verificar se a API está funcionando.
@@ -143,3 +145,6 @@ curl -X PUT http://localhost:3000/api/tasks/1 \
 ```bash
 curl -X DELETE http://localhost:3000/api/tasks/1
 ```
+
+## Referências 
+- Visual Studio Code : https://code.visualstudio.com/
