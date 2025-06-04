@@ -40,6 +40,7 @@ O banco de dados foi projetado de forma simples, contendo apenas a tabela de tar
 - **Node.js**: Ambiente de execução JavaScript do lado do servidor
 - **Express.js**: Framework web para Node.js
 - **PostgreSQL**: Sistema de gerenciamento de banco de dados relacional
+- **ejs** : estrutura similar ao HTML mas, ao invés de mostrar tudo de forma estática, renderiza esses elementos HTML podendo haver estruturas Javascript dentro do código. 
 
 ### Bibliotecas
 - **pg**: Cliente PostgreSQL para Node.js
