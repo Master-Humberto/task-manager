@@ -150,5 +150,9 @@ curl -X PUT http://localhost:3000/api/tasks/1 \
 curl -X DELETE http://localhost:3000/api/tasks/1
 ```
 
+### Vídeo explicando sobre o Task Maanger
+
+[Assista ao vídeo mostrando tudo do Task Manager](https://youtu.be/JM0T-YaOA6g)
+
 ## Referências 
 - Visual Studio Code : https://code.visualstudio.com/
